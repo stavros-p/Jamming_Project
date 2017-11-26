@@ -8,21 +8,19 @@ import Spotify from '../../util/Spotify.js';
 
 class App extends React.Component {
   constructor(props) {
-  super(props);
-  this.updatePlaylistName=this.updatePlaylistName.bind(this);
-  this.addTrack = this.addTrack.bind(this);
-  this.removeTrack=this.removeTrack.bind(this);
-  this.savePlaylist=this.savePlaylist.bind(this);
-  this.search=this.search.bind(this);
-  this.state = {
-          searchResults: [], // array of things\
-          playlistName:'',
-          playlistTracks:[{name:'',
-           artist:'',
-           album:''
-        }]
+    super(props);
+    this.state = {
+      searchResults: [],
+      playlistName: 'New Playlist',
+      playlistTracks: []
+    };
 
-  }}
+    this.search = this.search.bind(this);
+    this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
+  }
 
   search(searchTerm){
     Spotify.search(searchTerm).then(searchResults=>{
@@ -63,7 +61,7 @@ savePlaylist() {
   <div className="App">
     <SearchBar onSearch={this.search}/>
     <div className="App-playlist">
-      <SearchResults searchResults={this.state.searchResults}/>
+      <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack}/>
       <Playlist onSave={this.savePlaylist} onNameChange={this.updatePlaylistName} onRemove={this.removeTrack}  playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks}/>
     </div>
   </div>
